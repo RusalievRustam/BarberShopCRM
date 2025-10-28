@@ -1,0 +1,24 @@
+package com.example.BarbershopSRMSystem.dto.reponses;
+
+import com.example.BarbershopSRMSystem.entities.Categories;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+import java.math.BigDecimal;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ProcedureResponse {
+    private Long id;
+    private String procedureName;
+    private String description;
+    private Integer duration;
+    private BigDecimal price;
+    private String category;
+    private Boolean active;
+
+
+}
