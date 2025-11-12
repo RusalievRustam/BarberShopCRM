@@ -33,7 +33,10 @@ public class Booking {
     private Procedure procedure;
 
     @Column(nullable = false)
-    private LocalDateTime dateTime;
+    private LocalDateTime startTime;
+
+    @Column(nullable = false)
+    private LocalDateTime endTime;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

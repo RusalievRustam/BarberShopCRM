@@ -41,7 +41,7 @@ public class ProcedureController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ProcedureResponse> updateProcedure(@PathVariable Long id, @Valid @RequestBody ProcedureRequest request){
         return ResponseEntity.ok(procedureService.updateProcedure(id,request));
     }

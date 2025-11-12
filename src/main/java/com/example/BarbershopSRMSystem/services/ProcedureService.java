@@ -37,9 +37,12 @@ public class ProcedureService {
     }
 
     public ProcedureResponse getProcedureById(Long id) {
-        Procedure procedure = procedureRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Процедура по id " + id + " не найдена"));
-        return procedureMapper.mapToResponse(procedure);
+        return procedureMapper.mapToResponse(getProcedureEntityById(id));
+    }
+
+    public Procedure getProcedureEntityById(Long id) {
+        return procedureRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Процедура не найдена!"));
     }
 
     public ProcedureResponse updateProcedure(Long id, ProcedureRequest request) {
@@ -56,7 +59,7 @@ public class ProcedureService {
 
     public List<ProcedureResponse> findByCategory(String categoryName) {
         Categories category = categoryRepository.findByCategory(categoryName)
-                .orElseThrow(()-> new RuntimeException("Категория не найдена"));
+                .orElseThrow(() -> new RuntimeException("Категория не найдена"));
 
         return procedureRepository.findByCategory(category)
                 .stream()

@@ -1,21 +1,27 @@
 package com.example.BarbershopSRMSystem.controllers;
 
+import com.example.BarbershopSRMSystem.dto.reponses.UserResponse;
 import com.example.BarbershopSRMSystem.dto.requests.UserRequest;
 import com.example.BarbershopSRMSystem.entities.Roles;
 import com.example.BarbershopSRMSystem.entities.User;
 import com.example.BarbershopSRMSystem.services.DatabaseUserDetailsService;
 import com.example.BarbershopSRMSystem.services.RoleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final DatabaseUserDetailsService userService;
@@ -38,27 +44,33 @@ public class UserController {
 
     // --- Обработка создания пользователя ---
     @PostMapping("/create")
-    public String createUser(@ModelAttribute("userRequest") UserRequest request) {
-        Roles role = roleService.getRoleByName(request.getRole());
-        User newUser = userService.createUser(request, role);
+    public String createUser(@ModelAttribute("userRequest") @Valid UserRequest request, Model model, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("roles", roleService.getAllRoles());
+            return "register";
+        }
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(
-                        newUser.getUsername(),
-                        newUser.getPassword(),
-                        newUser.getAuthorities()
-                );
+        Roles role = roleService.getRoleByName(request.getRole());
         userService.createUser(request, role);
         return "redirect:/users";
     }
 
-    // --- Текущий пользователь ---
+
     @GetMapping("/login")
     public String currentUser(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("username", authentication.getName());
         return "login";
     }
+
+
+//    @GetMapping("/me")
+//    public String getCurrentUser() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        return "Вы вошли как: " + authentication.getName();
+//    }
+
 
     @PostMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {

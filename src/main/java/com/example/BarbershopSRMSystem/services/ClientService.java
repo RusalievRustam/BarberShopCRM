@@ -32,22 +32,25 @@ public class ClientService {
     }
 
     public ClientResponse getClientById(Long id) {
-        Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Клиент с id " + id + " не найден"));
-        return clientMapper.mapToResponse(client);
+        return clientMapper.mapToResponse(getClientEntityById(id));
     }
+
+    public Client getClientEntityById(Long id) {
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Клиент с id " + id + " не найден"));
+    }
+
 
     public ClientResponse updateClient(Long id, ClientRequest request) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(()->new RuntimeException("Клиент с id " + id + " не найден"));
-        clientMapper.updateEntityFromRequest(request,client);
-        Client updated = clientRepository.save(client);
-        return clientMapper.mapToResponse(updated);
+                .orElseThrow(() -> new RuntimeException("Клиент с id " + id + " не найден"));
+        clientMapper.updateEntityFromRequest(request, client);
+        return clientMapper.mapToResponse(client);
     }
 
     public List<ClientResponse> searchClients(String keyword) {
         return clientRepository
-                .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(keyword,keyword)
+                .findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(keyword, keyword)
                 .stream()
                 .map(clientMapper::mapToResponse)
                 .collect(Collectors.toList());

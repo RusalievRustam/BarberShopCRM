@@ -13,6 +13,5 @@ public class CategoryMapper {
     }
 
     public void updateEntityFromRequest(){
-        //TODO
     }
 }
