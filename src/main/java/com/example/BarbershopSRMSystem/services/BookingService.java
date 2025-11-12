@@ -2,15 +2,12 @@ package com.example.BarbershopSRMSystem.services;
 
 
 import com.example.BarbershopSRMSystem.dto.reponses.BookingResponse;
-import com.example.BarbershopSRMSystem.dto.reponses.ClientResponse;
 import com.example.BarbershopSRMSystem.dto.requests.BookingRequest;
 import com.example.BarbershopSRMSystem.entities.Booking;
 import com.example.BarbershopSRMSystem.entities.Procedure;
 import com.example.BarbershopSRMSystem.enums.BookingStatus;
 import com.example.BarbershopSRMSystem.mapping.BookingMapper;
 import com.example.BarbershopSRMSystem.repositories.BookingRepository;
-import com.example.BarbershopSRMSystem.repositories.ClientRepository;
-import com.example.BarbershopSRMSystem.repositories.ProcedureRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

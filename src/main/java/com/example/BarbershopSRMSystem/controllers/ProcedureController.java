@@ -5,8 +5,6 @@ import com.example.BarbershopSRMSystem.dto.requests.ProcedureRequest;
 import com.example.BarbershopSRMSystem.entities.Procedure;
 import com.example.BarbershopSRMSystem.services.ProcedureService;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

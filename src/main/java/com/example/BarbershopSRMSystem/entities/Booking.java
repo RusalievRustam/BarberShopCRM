@@ -1,7 +1,6 @@
 package com.example.BarbershopSRMSystem.entities;
 
 import com.example.BarbershopSRMSystem.enums.BookingStatus;
-import com.example.BarbershopSRMSystem.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

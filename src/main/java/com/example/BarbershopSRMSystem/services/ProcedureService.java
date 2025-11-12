@@ -8,7 +8,6 @@ import com.example.BarbershopSRMSystem.mapping.ProcedureMapper;
 import com.example.BarbershopSRMSystem.repositories.CategoryRepository;
 import com.example.BarbershopSRMSystem.repositories.ProcedureRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

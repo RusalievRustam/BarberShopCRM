@@ -1,0 +1,121 @@
+/* ===== CLIENT FORM PAGES (CREATE, EDIT) ===== */
+.client-form-container {
+    display: flex;
+    width: 1000px;
+    max-width: 100%;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    min-height: 600px;
+}
+
+.client-form-brand-section {
+    flex: 1;
+    background: var(--primary);
+    color: white;
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.client-form-brand-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(212, 175, 55, 0.1) 100%);
+}
+
+.client-form-logo {
+    width: 80px;
+    height: 80px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.client-form-logo svg {
+    width: 50px;
+    height: 50px;
+    fill: var(--primary);
+}
+
+.client-form-section {
+    flex: 1;
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.client-form-header {
+    margin-bottom: 2rem;
+}
+
+.client-form-header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.client-form-header p {
+    color: var(--gray);
+    font-size: 1rem;
+}
+
+.client-form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.btn-cancel {
+    background: var(--gray);
+    color: white;
+    flex: 1;
+}
+
+.btn-cancel:hover {
+    background: #6c757d;
+}
+
+.btn-submit {
+    flex: 2;
+}
+
+.phone-input {
+    font-family: monospace;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+    .client-form-container {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .client-form-brand-section {
+        padding: 2rem 1.25rem;
+    }
+
+    .client-form-section {
+        padding: 2rem 1.25rem;
+    }
+
+    .client-form-actions {
+        flex-direction: column;
+    }
+}

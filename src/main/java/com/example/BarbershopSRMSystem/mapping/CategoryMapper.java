@@ -2,7 +2,6 @@ package com.example.BarbershopSRMSystem.mapping;
 
 import com.example.BarbershopSRMSystem.dto.requests.CategoryRequest;
 import com.example.BarbershopSRMSystem.entities.Categories;
-import jakarta.persistence.Column;
 import org.springframework.stereotype.Component;
 
 @Component

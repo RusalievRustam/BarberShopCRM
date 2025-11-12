@@ -6,7 +6,6 @@ import com.example.BarbershopSRMSystem.entities.Barber;
 import com.example.BarbershopSRMSystem.mapping.BarberMapper;
 import com.example.BarbershopSRMSystem.repositories.BarberRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

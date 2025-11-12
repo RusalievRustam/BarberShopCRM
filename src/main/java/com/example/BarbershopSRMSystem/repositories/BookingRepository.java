@@ -1,7 +1,6 @@
 package com.example.BarbershopSRMSystem.repositories;
 
 import com.example.BarbershopSRMSystem.entities.Booking;
-import com.example.BarbershopSRMSystem.entities.Procedure;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
