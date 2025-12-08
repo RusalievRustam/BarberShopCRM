@@ -1,8 +1,6 @@
 package com.example.BarbershopSRMSystem.services;
 
 import com.example.BarbershopSRMSystem.dto.reponses.CategoryResponse;
-import com.example.BarbershopSRMSystem.dto.requests.CategoryRequest;
-import com.example.BarbershopSRMSystem.entities.Categories;
 import com.example.BarbershopSRMSystem.mapping.CategoryMapper;
 import com.example.BarbershopSRMSystem.repositories.CategoryRepository;
 import lombok.AllArgsConstructor;

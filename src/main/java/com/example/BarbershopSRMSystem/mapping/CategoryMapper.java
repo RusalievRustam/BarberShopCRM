@@ -1,7 +1,6 @@
 package com.example.BarbershopSRMSystem.mapping;
 
 import com.example.BarbershopSRMSystem.dto.reponses.CategoryResponse;
-import com.example.BarbershopSRMSystem.dto.requests.CategoryRequest;
 import com.example.BarbershopSRMSystem.entities.Categories;
 import org.springframework.stereotype.Component;
 

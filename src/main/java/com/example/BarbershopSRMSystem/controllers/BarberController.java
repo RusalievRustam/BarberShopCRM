@@ -3,11 +3,9 @@ package com.example.BarbershopSRMSystem.controllers;
 import com.example.BarbershopSRMSystem.dto.reponses.BarberResponse;
 import com.example.BarbershopSRMSystem.dto.requests.BarberRequest;
 import com.example.BarbershopSRMSystem.services.BarberService;
-import com.example.BarbershopSRMSystem.services.DatabaseUserDetailsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

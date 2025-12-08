@@ -7,7 +7,6 @@ import com.example.BarbershopSRMSystem.entities.Booking;
 import com.example.BarbershopSRMSystem.services.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

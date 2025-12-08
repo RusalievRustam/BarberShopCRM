@@ -6,7 +6,6 @@ import com.example.BarbershopSRMSystem.dto.requests.UserRequest;
 import com.example.BarbershopSRMSystem.entities.Roles;
 import com.example.BarbershopSRMSystem.entities.User;
 import com.example.BarbershopSRMSystem.repositories.RoleRepository;
-import com.example.BarbershopSRMSystem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -3,9 +3,7 @@ package com.example.BarbershopSRMSystem.mapping;
 import com.example.BarbershopSRMSystem.dto.reponses.BarberResponse;
 import com.example.BarbershopSRMSystem.dto.requests.BarberRequest;
 import com.example.BarbershopSRMSystem.entities.Barber;
-import com.example.BarbershopSRMSystem.entities.User;
 import com.example.BarbershopSRMSystem.enums.Status;
-import com.example.BarbershopSRMSystem.services.DatabaseUserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component

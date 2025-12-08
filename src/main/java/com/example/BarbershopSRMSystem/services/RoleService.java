@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +43,7 @@ public class RoleService {
     }
 
     // Удалить роль по id
-    public void deleteRole(Long id) {
-        roleRepository.deleteById(id);
-    }
+//    public void deleteRole(Long id) {
+//        roleRepository.deleteById(id);
+//    }
 }

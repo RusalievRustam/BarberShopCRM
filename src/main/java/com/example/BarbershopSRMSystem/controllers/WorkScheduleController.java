@@ -3,7 +3,6 @@ package com.example.BarbershopSRMSystem.controllers;
 import com.example.BarbershopSRMSystem.dto.reponses.WorkScheduleResponse;
 import com.example.BarbershopSRMSystem.dto.requests.WorkScheduleRequest;
 import com.example.BarbershopSRMSystem.services.WorkScheduleService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

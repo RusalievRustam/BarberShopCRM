@@ -1,6 +1,5 @@
 package com.example.BarbershopSRMSystem.dto.reponses;
 
-import com.example.BarbershopSRMSystem.entities.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

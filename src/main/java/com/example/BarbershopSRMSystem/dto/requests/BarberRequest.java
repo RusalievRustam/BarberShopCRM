@@ -1,6 +1,5 @@
 package com.example.BarbershopSRMSystem.dto.requests;
 
-import com.example.BarbershopSRMSystem.enums.Status;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.NoArgsConstructor;

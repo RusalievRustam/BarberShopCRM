@@ -2,21 +2,13 @@ package com.example.BarbershopSRMSystem.controllers;
 
 import com.example.BarbershopSRMSystem.dto.reponses.ClientResponse;
 import com.example.BarbershopSRMSystem.dto.requests.ClientRequest;
-import com.example.BarbershopSRMSystem.entities.Client;
 import com.example.BarbershopSRMSystem.services.ClientService;
-import lombok.Cleanup;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
-
 import java.util.List;
-import java.util.ResourceBundle;
 
 @CrossOrigin(origins = "http://localhost:5174")
 @RestController
