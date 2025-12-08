@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class BookingResponse {
     private Long id;
     private String clientName;
-    private String masterName;
+    private String barberName;
     private String procedureName;
     private LocalDateTime startTime;
     private LocalDateTime endTime;

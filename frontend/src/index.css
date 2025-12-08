@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    color: #334155;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+#root {
+    min-height: 100vh;
+}
+/* Глобальные стили для всех dropdown (select) */
+select {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    padding-right: 2.5rem;
+    width: 100%;
+    max-width: 100%;
+}
+
+select:hover {
+    border-color: #8b5cf6;
+    background-color: rgba(139, 92, 246, 0.02);
+}
+
+select:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    background-color: white;
+}
+
+select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #f8fafc;
+}
+
+/* Стили для ошибок */
+select.error {
+    border-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+select.error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* Стили для темной темы (если есть) */
+
+/* Плавные переходы */
+* {
+    transition: all 0.3s ease;
+}

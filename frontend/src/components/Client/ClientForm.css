@@ -1,0 +1,83 @@
+.client-form {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Для вертикального расположения полей Имя и Фамилия */
+.form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.client-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.client-form label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.client-form input,
+.client-form textarea {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    font-family: inherit;
+    resize: vertical;
+}
+
+.client-form input:focus,
+.client-form textarea:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+    transform: translateY(-2px);
+}
+
+.client-form input::placeholder,
+.client-form textarea::placeholder {
+    color: #94a3b8;
+}
+
+.notes-textarea {
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+.client-form .submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 2rem;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.client-form .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    background: linear-gradient(135deg, #a855f7, #d946ef);
+}
+
+.client-form .submit-btn:active {
+    transform: translateY(0);
+}

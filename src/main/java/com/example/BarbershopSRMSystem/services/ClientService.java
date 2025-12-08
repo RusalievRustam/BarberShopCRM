@@ -45,6 +45,7 @@ public class ClientService {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Клиент с id " + id + " не найден"));
         clientMapper.updateEntityFromRequest(request, client);
+        clientRepository.save(client);
         return clientMapper.mapToResponse(client);
     }
 

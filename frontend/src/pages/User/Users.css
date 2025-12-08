@@ -1,0 +1,359 @@
+.users-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.users-container .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.users-container .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.users-container .page-header p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+/* Карточка администратора */
+.admin-info {
+    margin-bottom: 2rem;
+}
+
+.admin-card {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05));
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.admin-icon {
+    font-size: 3rem;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.admin-content h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.admin-content p {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+/* Панель управления */
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.stats {
+    display: flex;
+    gap: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    min-width: 120px;
+}
+
+.stat-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #3b82f6;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #64748b;
+    text-align: center;
+}
+
+.users-container .add-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    white-space: nowrap;
+}
+
+.users-container .add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Таблица пользователей */
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-table th {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.users-table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+}
+
+.users-table tr:last-child td {
+    border-bottom: none;
+}
+
+.users-table tr:hover {
+    background: rgba(59, 130, 246, 0.03);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.user-username {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 1rem;
+    font-family: 'Courier New', monospace;
+}
+
+.user-id {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+/* Бейдж роли */
+.role-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: inline-block;
+}
+
+.date-cell {
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+/* Кнопки действий */
+.users-container .action-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.users-container .edit-btn {
+    padding: 0.75rem 1.25rem;
+    background: rgba(59, 130, 246, 0.1);
+    color: #3b82f6;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.users-container .edit-btn:hover {
+    background: rgba(59, 130, 246, 0.15);
+    transform: translateY(-1px);
+}
+
+.users-container .delete-btn {
+    padding: 0.75rem 1.25rem;
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.users-container .delete-btn:hover:not(:disabled) {
+    background: rgba(239, 68, 68, 0.15);
+    transform: translateY(-1px);
+}
+
+.users-container .delete-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Футер таблицы */
+.users-container .table-footer {
+    padding: 1rem 1.5rem;
+    background: rgba(248, 250, 252, 0.8);
+    border-top: 1px solid #e2e8f0;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.users-count {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.role-legend {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.legend-color.admin {
+    background: #dc2626;
+}
+
+.legend-color.manager {
+    background: #2563eb;
+}
+
+.legend-color.user {
+    background: #047857;
+}
+
+/* Состояние пустого поиска */
+.users-container .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.users-container .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+}
+
+.users-container .empty-state h3 {
+    font-size: 1.5rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.users-container .empty-state p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.users-container .empty-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.users-container .empty-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+@media (max-width: 768px) {
+    .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .stats {
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .stat-item {
+        width: 100%;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .users-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .table-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .role-legend {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}

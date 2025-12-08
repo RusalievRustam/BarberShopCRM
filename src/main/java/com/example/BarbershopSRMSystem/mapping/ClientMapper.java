@@ -20,7 +20,7 @@ public class ClientMapper {
         client.setFirstName(request.getFirstName());
         client.setLastName(request.getLastName());
         client.setPhoneNumber(request.getPhoneNumber());
-        client.setNotes(request.getNote());
+        client.setNotes(request.getNotes());
     }
 
     public ClientResponse mapToResponse(Client client) {

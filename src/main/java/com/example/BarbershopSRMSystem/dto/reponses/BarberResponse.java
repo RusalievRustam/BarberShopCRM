@@ -17,5 +17,4 @@ public class BarberResponse {
     private String phone;
     private LocalDate hireDate;
     private Status status;
-    private Long userId; // только id пользователя
 }

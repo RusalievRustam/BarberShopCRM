@@ -29,9 +29,9 @@ public class DataInitializer implements CommandLineRunner {
             UserRequest userRequest = new UserRequest();
             userRequest.setUsername("admin");
             userRequest.setPassword("12345");
-            userRequest.setRole(role.getRoleName()); // строка для DTO
+            userRequest.setRoleId(role.getId()); // строка для DTO
 
-            userService.createUser(userRequest, role); // передаём объект роли с id
+            userService.createUser(userRequest); // передаём объект роли с id
             System.out.println("Создан пользователь admin / 12345");
         }
     }

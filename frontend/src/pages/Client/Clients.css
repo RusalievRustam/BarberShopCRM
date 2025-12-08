@@ -1,0 +1,314 @@
+.clients-container {
+    animation: fadeIn 0.6s ease-out;
+}
+
+.clients-container .page-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.clients-container .page-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.clients-container .page-header p {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+/* Панель управления */
+.controls-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.search-section {
+    flex: 1;
+    min-width: 300px;
+}
+
+.search-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.search-select {
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #475569;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.search-select:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.search-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    font-size: 0.9rem;
+    min-width: 250px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+}
+
+.search-btn {
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-btn:hover {
+    background: linear-gradient(135deg, #a855f7, #d946ef);
+    transform: translateY(-1px);
+}
+
+.clear-btn {
+    padding: 0.75rem 1rem;
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.clear-btn:hover {
+    background: #e2e8f0;
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.875rem 1.5rem;
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    white-space: nowrap;
+}
+
+.add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+/* Таблица клиентов */
+.clients-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.clients-table th {
+    background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+    padding: 1.25rem 1.5rem;
+    text-align: left;
+    font-weight: 600;
+    color: #475569;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.clients-table td {
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #475569;
+}
+
+.clients-table tr:last-child td {
+    border-bottom: none;
+}
+
+.clients-table tr:hover {
+    background: rgba(139, 92, 246, 0.03);
+}
+
+.client-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.client-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 1rem;
+}
+
+.client-id {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.phone-cell {
+    font-weight: 500;
+    color: #1e293b;
+    font-family: 'Courier New', monospace;
+}
+
+.email-cell {
+    color: #475569;
+}
+
+.no-email {
+    color: #94a3b8;
+    font-style: italic;
+}
+
+/* Футер таблицы */
+.table-footer {
+    padding: 1rem 1.5rem;
+    background: rgba(248, 250, 252, 0.8);
+    border-top: 1px solid #e2e8f0;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}
+
+.clients-count {
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* Кнопки действий */
+.action-buttons {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.clients-container .edit-btn {
+    padding: 0.75rem 1.25rem;
+    background: rgba(139, 92, 246, 0.1);
+    color: #8b5cf6;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+}
+
+.clients-container .edit-btn:hover {
+    background: rgba(139, 92, 246, 0.15);
+    transform: translateY(-1px);
+}
+
+.clients-container .delete-btn {
+    padding: 0.75rem 1.25rem;
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.clients-container .delete-btn:hover {
+    background: rgba(239, 68, 68, 0.15);
+    transform: translateY(-1px);
+}
+
+/* Состояние пустого поиска */
+.clients-container .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.clients-container .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+}
+
+.clients-container .empty-state h3 {
+    font-size: 1.5rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+}
+
+.clients-container .empty-state p {
+    color: #64748b;
+    margin-bottom: 2rem;
+}
+
+.clients-container .empty-btn {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.clients-container .empty-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+@media (max-width: 768px) {
+    .controls-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-section {
+        min-width: auto;
+    }
+
+    .search-controls {
+        flex-direction: column;
+    }
+
+    .search-input {
+        min-width: auto;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .clients-table {
+        display: block;
+        overflow-x: auto;
+    }
+}

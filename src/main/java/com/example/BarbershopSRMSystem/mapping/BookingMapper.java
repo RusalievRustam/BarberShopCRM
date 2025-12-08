@@ -29,7 +29,7 @@ public class BookingMapper {
 
     public void applyRequestToEntity(BookingRequest request, Booking booking) {
         booking.setClient(clientService.getClientEntityById(request.getClientId()));
-        booking.setBarber(barberService.getBarberById(request.getBarberId()));
+        booking.setBarber(barberService.getBarberEntityById(request.getBarberId()));
         booking.setProcedure(procedureService.getProcedureEntityById(request.getProcedureId()));
         booking.setStartTime(request.getStartTime());
         booking.setStatus(BookingStatus.valueOf(request.getStatus()));

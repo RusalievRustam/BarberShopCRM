@@ -1,0 +1,232 @@
+.procedure-form {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.procedure-form .form-section {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.procedure-form .section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+
+@media (max-width: 768px) {
+    .procedure-form .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+.procedure-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.procedure-form label {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.procedure-form input,
+.procedure-form select,
+.procedure-form textarea {
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    background: rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+.procedure-form input:focus,
+.procedure-form select:focus,
+.procedure-form textarea:focus {
+    outline: none;
+    border-color: #10b981;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    transform: translateY(-2px);
+}
+
+.procedure-form input.error,
+.procedure-form select.error,
+.procedure-form textarea.error {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+}
+
+.procedure-form input.error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.error-message {
+    color: #dc2626;
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+}
+
+/* Стили для чекбокса */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    margin-top: 1.5rem;
+}
+
+.checkbox-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkbox-custom {
+    position: relative;
+    height: 24px;
+    width: 24px;
+    background-color: #fff;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    margin-right: 12px;
+    transition: all 0.3s ease;
+}
+
+.checkbox-input:checked ~ .checkbox-custom {
+    background-color: #10b981;
+    border-color: #10b981;
+}
+
+.checkbox-input:checked ~ .checkbox-custom:after {
+    content: "";
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-text {
+    font-weight: 600;
+    color: #475569;
+    font-size: 1rem;
+}
+
+.checkbox-hint {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    padding-left: 36px;
+}
+
+.notes-textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+/* Сводка услуги */
+.procedure-summary {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(248, 250, 252, 0.8);
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.procedure-summary .summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.procedure-summary .summary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.procedure-summary .summary-item:last-child {
+    border-bottom: none;
+}
+
+.procedure-summary .summary-label {
+    font-weight: 500;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+.procedure-summary .summary-value {
+    font-weight: 600;
+    color: #1e293b;
+    text-align: right;
+    max-width: 60%;
+    word-break: break-word;
+}
+
+.status-indicator {
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-indicator.active {
+    background: rgba(16, 185, 129, 0.1);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.status-indicator.inactive {
+    background: rgba(100, 116, 139, 0.1);
+    color: #475569;
+    border: 1px solid rgba(100, 116, 139, 0.2);
+}
+
+.procedure-form .submit-btn {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.procedure-form .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #34d399, #10b981);
+}
+
+.procedure-form .submit-btn:active {
+    transform: translateY(0);
+}

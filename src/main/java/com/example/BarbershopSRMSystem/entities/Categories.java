@@ -17,6 +17,6 @@ public class Categories {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String category;
+    private String categoryName;
 
 }

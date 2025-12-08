@@ -19,7 +19,7 @@ public class BarberService {
     private final BarberMapper barberMapper;
 
 
-    public BarberResponse createBarber(BarberRequest request){
+    public BarberResponse createBarber(BarberRequest request) {
         Barber barber = barberMapper.mapToEntity(request);
         Barber saved = barberRepository.save(barber);
         return barberMapper.mapToResponse(saved);
@@ -32,18 +32,22 @@ public class BarberService {
                 .collect(Collectors.toList());
     }
 
-    public Barber getBarberById(Long id) {
-        return barberRepository.findById(id).
-                orElseThrow(() -> new RuntimeException("Barber by id" + id + " not found!"));
+    public BarberResponse getBarberById(Long id) {
+        return barberMapper.mapToResponse(getBarberEntityById(id));
     }
 
-    public Barber updateBarber(Barber updatedBarber) {
-        Barber existingBarber = getBarberById(updatedBarber.getId());
-        existingBarber.setFirstName(updatedBarber.getFirstName());
-        existingBarber.setLastName(updatedBarber.getLastName());
-        existingBarber.setPhone(updatedBarber.getPhone());
-        existingBarber.setStatus(updatedBarber.getStatus());
-        return barberRepository.save(existingBarber);
+    public Barber getBarberEntityById(Long id) {
+        return barberRepository.findById(id).
+                orElseThrow(() -> new RuntimeException("Barber by id" + id + " not found!"));
+
+    }
+
+    public BarberResponse updateBarber(BarberRequest request, Long id) {
+        Barber barber = barberRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Барбер не найден"));
+        barberMapper.updateEntityFromRequest(request, barber);
+        barberRepository.save(barber);
+        return barberMapper.mapToResponse(barber);
     }
 
     public void deleteBarber(Long id) {

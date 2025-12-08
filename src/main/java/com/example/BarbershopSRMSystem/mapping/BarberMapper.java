@@ -4,17 +4,12 @@ import com.example.BarbershopSRMSystem.dto.reponses.BarberResponse;
 import com.example.BarbershopSRMSystem.dto.requests.BarberRequest;
 import com.example.BarbershopSRMSystem.entities.Barber;
 import com.example.BarbershopSRMSystem.entities.User;
+import com.example.BarbershopSRMSystem.enums.Status;
 import com.example.BarbershopSRMSystem.services.DatabaseUserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class BarberMapper {
-
-    private final DatabaseUserDetailsService userService;
-
-    public BarberMapper(DatabaseUserDetailsService userService) {
-        this.userService = userService;
-    }
 
     public Barber mapToEntity(BarberRequest request) {
         Barber barber = new Barber();
@@ -30,11 +25,8 @@ public class BarberMapper {
         barber.setFirstName(request.getFirstName());
         barber.setLastName(request.getLastName());
         barber.setPhone(request.getPhone());
-        barber.setStatus(request.getStatus());
+        barber.setStatus(Status.valueOf(String.valueOf(request.getStatus())));
 
-        // Получаем сущность User по id
-        User user = userService.getUserById(request.getUserId());
-        barber.setUser(user);
     }
 
     public BarberResponse mapToResponse(Barber barber) {
@@ -44,8 +36,7 @@ public class BarberMapper {
                 barber.getLastName(),
                 barber.getPhone(),
                 barber.getHireDate(),
-                barber.getStatus(),
-                barber.getUser() != null ? barber.getUser().getId() : null
+                barber.getStatus()
         );
     }
 }

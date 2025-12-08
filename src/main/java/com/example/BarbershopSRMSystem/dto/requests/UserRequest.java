@@ -24,7 +24,7 @@ public class UserRequest {
     private String password;
 
     @NotBlank(message = "Укажите роль!")
-    private String role;
+    private Long roleId;
 
     private boolean active = true;
 

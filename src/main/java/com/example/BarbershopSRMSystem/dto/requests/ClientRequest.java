@@ -22,5 +22,5 @@ public class ClientRequest {
             message = "Некорректный номер телефона. Используйте формат: +996777123456"
     )
     private String phoneNumber;
-    private String note;
+    private String notes;
 }

@@ -1,8 +1,10 @@
 package com.example.BarbershopSRMSystem.services;
 
+import com.example.BarbershopSRMSystem.dto.reponses.UserResponse;
 import com.example.BarbershopSRMSystem.dto.requests.UserRequest;
 import com.example.BarbershopSRMSystem.entities.Roles;
 import com.example.BarbershopSRMSystem.entities.User;
+import com.example.BarbershopSRMSystem.mapping.UserMapper;
 import com.example.BarbershopSRMSystem.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.management.relation.Role;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,35 +24,42 @@ public class DatabaseUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder; // используем для шифрования новых паролей
     private final RoleService roleService;
+    private final UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь : " + username + " не найден"));
 
-        String roleName = user.getRole().getRoleName(); // берём роль, которая реально связана с пользователем
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .roles(roleName)
+                .roles(user.getRole().getRoleName())
                 .disabled(!user.getActive())
                 .build();
     }
 
     // 🔹 новый вариант метода
-    public User createUser(UserRequest request, Roles role) {
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword())); // хэшируем
-        user.setRole(role);
-        user.setActive(true);
-        return userRepository.save(user);
+    public UserResponse createUser(UserRequest request) {
+        User user = userMapper.mapToEntity(request);
+
+        Roles roles = roleService.getRoleById(request.getRoleId());
+        user.setRole(roles);
+
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        User saved = userRepository.save(user);
+        return userMapper.mapToResponse(saved);
     }
 
-    public User getUserById(Long id) {
+    public UserResponse getUserById(Long id) {
+        return userMapper.mapToResponse(getUserEntityById(id));
+    }
+
+    public User getUserEntityById(Long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     public void deleteUser(Long id) {
@@ -60,23 +70,28 @@ public class DatabaseUserDetailsService implements UserDetailsService {
         return userRepository.count();
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getAllUsers() {
+        return userRepository.findAll()
+                .stream()
+                .map(userMapper::mapToResponse)
+                .collect(Collectors.toList());
     }
 
-    public User updateUser(UserRequest request, Long id) {
+    public UserResponse updateUser(UserRequest request, Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
-        if (request.getUsername() != null && !request.getUsername().isEmpty()) {
-            user.setUsername(request.getUsername());
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        userMapper.userUpdateToEntity(request, user);
+
+        if (request.getRoleId() != null) {
+            Roles roles = roleService.getRoleById(request.getRoleId());
+            user.setRole(roles);
         }
-        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
-            user.setPassword(request.getPassword());
+
+        if (request.getPassword() != null && request.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
-        if (request.getRole() != null && !request.getRole().isEmpty()) {
-            Roles role = roleService.getRoleByName(request.getRole());
-            user.setRole(role);
-        }
-        return userRepository.save(user);
+
+        User updated = userRepository.save(user);
+        return userMapper.mapToResponse(updated);
     }
 }

@@ -7,7 +7,6 @@ import com.example.BarbershopSRMSystem.entities.Categories;
 import com.example.BarbershopSRMSystem.entities.Procedure;
 import com.example.BarbershopSRMSystem.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.query.procedure.ProcedureParameter;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -22,7 +21,7 @@ public class ProcedureMapper {
         return procedure;
     }
 
-    public void ProcedureUpdateEntity(ProcedureRequest request, Procedure procedure) {
+    public void procedureUpdateEntity(ProcedureRequest request, Procedure procedure) {
         applyRequestToEntity(request,procedure);
     }
 
@@ -38,13 +37,18 @@ public class ProcedureMapper {
     }
 
     public ProcedureResponse mapToResponse(Procedure procedure){
+        CategoryResponse categoryResponse = new CategoryResponse(
+                procedure.getCategory().getId(),
+                procedure.getCategory().getCategoryName()
+        );
+
         return new ProcedureResponse(
                 procedure.getId(),
                 procedure.getProcedureName(),
                 procedure.getDescription(),
                 procedure.getDuration(),
                 procedure.getPrice(),
-                procedure.getCategory().getCategory(),
+                categoryResponse,
                 procedure.getActive()
         );
     }

@@ -33,6 +33,7 @@ public class BookingService {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Запись не найдена"));
         bookingMapper.updateEntityFromRequest(request, booking);
+        bookingRepository.save(booking);
         return bookingMapper.mapToResponse(booking);
     }
 

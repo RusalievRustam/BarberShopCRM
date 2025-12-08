@@ -40,7 +40,4 @@ public class Barber {
     @Column(nullable = false)
     private Status status;
 
-    @JoinColumn(name = "user_id", nullable = false)
-    @OneToOne
-    private User user;
 }

@@ -15,7 +15,7 @@ public class BookingRequest {
     private Long barberId;
     private Long procedureId;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime startTime;
     private String status;
 

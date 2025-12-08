@@ -1,5 +1,6 @@
 package com.example.BarbershopSRMSystem.dto.reponses;
 
+import com.example.BarbershopSRMSystem.entities.Roles;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -8,5 +9,5 @@ import lombok.Getter;
 public class UserResponse {
     private Long id;
     private String username;
-    private String role;
+    private RoleResponse role;
 }

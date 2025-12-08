@@ -1,11 +1,12 @@
 package com.example.BarbershopSRMSystem.entities;
 
-import com.example.BarbershopSRMSystem.enums.DayOfWeek;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -35,5 +36,4 @@ public class WorkSchedule {
 
     @Column(nullable = false)
     private Boolean active;
-
 }

@@ -17,7 +17,7 @@ public class ProcedureResponse {
     private String description;
     private Integer duration;
     private BigDecimal price;
-    private String category;
+    private CategoryResponse category;
     private Boolean active;
 
 
