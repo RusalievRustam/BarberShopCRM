@@ -1,13 +1,19 @@
 package com.example.BarbershopSRMSystem.security;
 
+import com.example.BarbershopSRMSystem.filter.JwtFilter;
 import com.example.BarbershopSRMSystem.services.DatabaseUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,47 +23,68 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SecurityConfig {
 
     private final DatabaseUserDetailsService userDetailsService;
+    private final JwtFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
                 .csrf(csrf -> csrf.disable())
+                .cors(cors -> {
+                })
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // страница логина и регистрации для браузера
-                        .requestMatchers("/users/login", "/users/create", "/users/register").permitAll()
-                        // REST API защищаем через Basic Auth
-                        .requestMatchers("/api/**").permitAll()
-                        // админские страницы
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        // остальные страницы требуют авторизации
+
+                        // --- Разрешаем без авторизации ---
+                        .requestMatchers(
+                                "/api/auth/login",
+                                "/api/auth/register",
+                                "/auth/client/enter"
+                        ).permitAll()
+
+                        // --- Открытые для клиентов публичные API ---
+                        .requestMatchers(
+                                "/api/booking/**",
+                                "/api/procedures/**",
+                                "/api/categories/**",
+                                "/api/barber/**",
+                                "/api/clients/**"
+                        ).permitAll()
+
+                        // --- Только для администратора ---
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/roles/**").hasRole("ADMIN")
+
+                        // --- Только для барбера и админа ---
+                        .requestMatchers("/api/schedule/**").hasAnyRole("BARBER", "ADMIN")
+
+                        // --- Всё остальное требует JWT ---
                         .anyRequest().authenticated()
                 )
-                // Для браузерных страниц
-                .formLogin(form -> form
-                        .loginPage("/users/login")
-                        .defaultSuccessUrl("/users", true)
-                        .permitAll()
-                )
-                // Для REST API
-                .httpBasic(Customizer.withDefaults())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/users/login")
-                        .permitAll()
-                )
+
+                // JWT фильтр
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+
+                // UserDetailsService
                 .userDetailsService(userDetailsService);
 
         return http.build();
     }
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
+
+    // CORS для фронта
+    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:5174") // фронтенд
-                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+                        .allowedOrigins("http://localhost:5173", "http://localhost:5174")
+                        .allowedMethods("*")
                         .allowCredentials(true);
             }
         };

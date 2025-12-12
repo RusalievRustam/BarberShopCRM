@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,14 +29,19 @@ public class DatabaseUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Пользователь : " + username + " не найден"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        String roleName = user.getRole().getRoleName();
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
+        // Добавляем ROLE_ если нужно
+        String authority = roleName.startsWith("ROLE_") ? roleName : "ROLE_" + roleName;
+
+        System.out.println("Loading user: " + username + ", authority: " + authority);
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
                 .password(user.getPassword())
-                .roles(user.getRole().getRoleName())
-                .disabled(!user.getActive())
+                .authorities(authority) // Используем authority с ROLE_
                 .build();
     }
 

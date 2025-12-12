@@ -55,13 +55,19 @@ public class WorkScheduleController {
     }
 
     @GetMapping("/{barberId}/is-working")
-    public ResponseEntity<Boolean> isBarberWorking(@PathVariable Long barberId, @RequestParam DayOfWeek dayOfWeek){
-        boolean working = workScheduleService.isBarberWorkingOnDate(barberId,dayOfWeek);
+    public ResponseEntity<Boolean> isBarberWorking(@PathVariable Long barberId, @RequestParam DayOfWeek dayOfWeek) {
+        boolean working = workScheduleService.isBarberWorkingOnDate(barberId, dayOfWeek);
         return ResponseEntity.ok(working);
     }
 
     @GetMapping("/{barberId}/day")
-    public ResponseEntity<WorkScheduleResponse> getScheduleForDay(@PathVariable Long barberId, @RequestParam DayOfWeek dayOfWeek){
-        return ResponseEntity.ok(workScheduleService.getScheduleByBarberAndDay(barberId,dayOfWeek));
+    public ResponseEntity<WorkScheduleResponse> getScheduleForDay(@PathVariable Long barberId, @RequestParam DayOfWeek dayOfWeek) {
+        return ResponseEntity.ok(workScheduleService.getScheduleByBarberAndDay(barberId, dayOfWeek));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<WorkScheduleResponse> deleteSchedule(@PathVariable Long id) {
+        workScheduleService.deleteWorkSchedule(id);
+        return ResponseEntity.noContent().build();
     }
 }

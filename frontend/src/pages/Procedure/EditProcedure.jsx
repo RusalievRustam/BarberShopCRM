@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ProcedureForm from "../../components/Procedure/ProcedureForm";
-import { getProcedureById, updateProcedure, getCategories } from "../../services/api";
+import {
+    getProcedureById,
+    updateProcedure,
+    getCategories
+} from "../../services/api";
 import "../PageLayout.css";
 
 export default function EditProcedure() {
@@ -17,16 +21,37 @@ export default function EditProcedure() {
     }, [id]);
 
     const loadData = async () => {
+        setLoading(true);
+        setError(null);
         try {
             const [procedureData, categoriesData] = await Promise.all([
                 getProcedureById(id),
                 getCategories()
             ]);
 
-            setInitial(procedureData);
+            if (!procedureData) {
+                throw new Error("Услуга не найдена");
+            }
+
+            // Нормализация данных, передаём только то, что понимает форма
+            const normalizedProcedure = {
+                id: procedureData.id,
+                procedureName: procedureData.procedureName || procedureData.name || "",
+                description: procedureData.description || "",
+                price: procedureData.price || 0,
+                duration: procedureData.duration || 0,
+                categoryId: procedureData.categoryId ||
+                    procedureData.category?.id ||
+                    procedureData.categoryId ||
+                    "",
+                active: procedureData.active !== undefined ? procedureData.active : true
+            };
+
+            setInitial(normalizedProcedure);
             setCategories(categoriesData || []);
         } catch (e) {
-            setError("Не удалось загрузить данные услуги: " + (e.message || e.status));
+            setError("Не удалось загрузить услугу: " + (e.message || e.status));
+            console.error("Ошибка загрузки:", e);
         } finally {
             setLoading(false);
         }
@@ -42,41 +67,45 @@ export default function EditProcedure() {
         }
     };
 
-    if (loading) return (
-        <div className="loading-container">
-            <div className="loading-spinner"></div>
-            <p>Загрузка данных...</p>
-        </div>
-    );
+    if (loading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Загрузка данных...</p>
+            </div>
+        );
+    }
 
-    if (error) return (
-        <div className="error-container">
-            <div className="error-icon">❌</div>
-            <h3>Ошибка загрузки</h3>
-            <p>{error}</p>
-            <button onClick={() => navigate("/procedures")} className="retry-btn">
-                Вернуться к списку
-            </button>
-        </div>
-    );
+    if (error) {
+        return (
+            <div className="error-container">
+                <div className="error-icon">❌</div>
+                <h3>Ошибка загрузки</h3>
+                <p>{error}</p>
+                <button onClick={() => navigate("/procedures")} className="retry-btn">
+                    Вернуться назад
+                </button>
+            </div>
+        );
+    }
 
-    if (!initial) return (
-        <div className="error-container">
-            <div className="error-icon">✂️</div>
-            <h3>Услуга не найдена</h3>
-            <p>Запрошенная услуга не существует или была удалена</p>
-            <button onClick={() => navigate("/procedures")} className="retry-btn">
-                Вернуться к списку
-            </button>
-        </div>
-    );
+    // Ожидаем, пока initial не будет установлен
+    if (!initial) {
+        return (
+            <div className="loading-container">
+                <div className="loading-spinner"></div>
+                <p>Подготовка формы...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="page-layout">
             <div className="page-header">
                 <h1>Редактировать услугу</h1>
-                <p>Внесите изменения в данные услуги</p>
+                <p>Измените необходимые данные</p>
             </div>
+
             <ProcedureForm
                 initial={initial}
                 onSubmit={handleUpdate}

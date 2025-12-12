@@ -5,6 +5,7 @@ import com.example.BarbershopSRMSystem.dto.requests.UserRequest;
 import com.example.BarbershopSRMSystem.services.DatabaseUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,6 +42,7 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserResponse> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 }

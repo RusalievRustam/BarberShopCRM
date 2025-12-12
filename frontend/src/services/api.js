@@ -5,349 +5,285 @@ const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080/api";
 const api = axios.create({
     baseURL: API_URL,
     withCredentials: true,
-    headers: {
-        'Content-Type': 'application/json',
-    }
+    headers: { 'Content-Type': 'application/json' },
 });
 
-// Barber API (существующие функции)
+// --- JWT Token helpers ---
+export function setToken(token) {
+    localStorage.setItem("token", token);
+}
+
+export function getToken() {
+    return localStorage.getItem("token");
+}
+
+export function removeToken() {
+    localStorage.removeItem("token");
+}
+
+export function authHeader() {
+    const token = getToken();
+    return token ? { Authorization: "Bearer " + token } : {};
+}
+
+// --- LOGIN / REGISTER ---
+export async function loginUser(payload) {
+    const res = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error("Ошибка авторизации");
+
+    const data = await res.json();
+
+    if (data.token) setToken(data.token); // сохраняем токен в localStorage
+    return data;
+}
+
+export async function registerUser(payload) {
+    const res = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error("Ошибка регистрации");
+    return res.json();
+}
+
+// --- BARBER API ---
 export const getBarbers = async () => {
-    try {
-        const res = await api.get("/barber");
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/barber", { headers: authHeader() });
+    return res.data;
 };
 
 export const getBarberById = async (id) => {
-    try {
-        const res = await api.get(`/barber/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get(`/barber/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
 export const createBarber = async (payload) => {
-    try {
-        const res = await api.post(`/barber`, payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.post("/barber", payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const updateBarber = async (id, payload) => {
-    try {
-        const res = await api.put(`/barber/${id}`, payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.put(`/barber/${id}`, payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const deleteBarber = async (id) => {
-    try {
-        const res = await api.delete(`/barber/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.delete(`/barber/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
-// Client API (новые функции)
+// --- CLIENT API ---
 export const getClients = async () => {
-    try {
-        const res = await api.get("/clients");
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/clients", { headers: authHeader() });
+    return res.data;
 };
 
 export const getClientById = async (id) => {
-    try {
-        const res = await api.get(`/clients/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get(`/clients/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
 export const createClient = async (payload) => {
-    try {
-        const res = await api.post("/clients", payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.post("/clients", payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const updateClient = async (id, payload) => {
-    try {
-        const res = await api.put(`/clients/${id}`, payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.put(`/clients/${id}`, payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const deleteClient = async (id) => {
-    try {
-        const res = await api.delete(`/clients/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.delete(`/clients/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
 export const searchClients = async (keyword) => {
-    try {
-        const res = await api.get("/clients/search", {
-            params: {keyword}
-        });
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/clients/search", { params: { keyword }, headers: authHeader() });
+    return res.data;
 };
 
 export const searchByPhone = async (phoneNumber) => {
-    try {
-        const res = await api.get("/clients/search/phone", {
-            params: {phoneNumber}
-        });
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/clients/search/phone", { params: { phoneNumber }, headers: authHeader() });
+    return res.data;
 };
-// User API (административная панель)
+
+// --- USER API ---
 export const getUsers = async () => {
-    try {
-        const res = await api.get("/admin");
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/admin", { headers: authHeader() });
+    return res.data;
 };
 
 export const getUserById = async (id) => {
-    try {
-        const res = await api.get(`/admin/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get(`/admin/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
 export const createUser = async (payload) => {
-    try {
-        const res = await api.post("/admin", payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.post("/admin", payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const updateUser = async (id, payload) => {
-    try {
-        const res = await api.put(`/admin/${id}`, payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.put(`/admin/${id}`, payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const deleteUser = async (id) => {
-    try {
-        const res = await api.delete(`/admin/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.delete(`/admin/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
-// Roles API (нужно создать на бэкенде)
+// --- ROLES API ---
 export const getRoles = async () => {
-    try {
-        const res = await api.get("/roles"); // или другой endpoint
-        return res.data;
-    } catch (e) {
-        console.warn("Не удалось загрузить роли, используем заглушку");
-        // Заглушка, если endpoint для ролей не реализован
-        return [
-            {id: 1, name: "ADMIN"},
-            {id: 2, name: "BARBER"},
-        ];
-    }
+    const res = await api.get("/roles", { headers: authHeader() });
+    return res.data;
 };
 
-// Booking API
+// --- BOOKING API ---
 export const getBookings = async () => {
-    try {
-        const res = await api.get("/booking");
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/booking", { headers: authHeader() });
+    return res.data;
 };
 
 export const getBookingById = async (id) => {
-    try {
-        const res = await api.get(`/booking/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get(`/booking/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
 export const createBooking = async (payload) => {
-    try {
-        const res = await api.post("/booking", payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.post("/booking", payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const updateBooking = async (id, payload) => {
-    try {
-        const res = await api.put(`/booking/${id}`, payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.put(`/booking/${id}`, payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const cancelBooking = async (id) => {
-    try {
-        const res = await api.patch(`/booking/cancel/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.patch(`/booking/cancel/${id}`, {}, { headers: authHeader() });
+    return res.data;
 };
 
 export const rescheduleBooking = async (id, newStartTime) => {
-    try {
-        const res = await api.patch(`/booking/reschedule/${id}`, { newStartTime });
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.patch(`/booking/reschedule/${id}`, { newStartTime }, { headers: authHeader() });
+    return res.data;
 };
 
 export const deleteBooking = async (id) => {
-    try {
-        const res = await api.delete(`/booking/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.delete(`/booking/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
 export const searchByBarber = async (barberName) => {
-    try {
-        const res = await api.get("/booking/search/byBarber", {
-            params: { barberName }
-        });
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/booking/search/byBarber", { params: { barberName }, headers: authHeader() });
+    return res.data;
 };
 
 export const searchByClient = async (clientName) => {
-    try {
-        const res = await api.get("/booking/search/byClient", {
-            params: { clientName }
-        });
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/booking/search/byClient", { params: { clientName }, headers: authHeader() });
+    return res.data;
 };
 
-// Procedure API
+// --- PROCEDURE API ---
 export const getProcedures = async () => {
-    try {
-        const res = await api.get("/procedures");
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/procedures", { headers: authHeader() });
+    return res.data;
 };
 
 export const getProcedureById = async (id) => {
-    try {
-        const res = await api.get(`/procedures/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get(`/procedures/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
 export const createProcedure = async (payload) => {
-    try {
-        const res = await api.post("/procedures", payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.post("/procedures", payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const updateProcedure = async (id, payload) => {
-    try {
-        const res = await api.put(`/procedures/${id}`, payload);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.put(`/procedures/${id}`, payload, { headers: authHeader() });
+    return res.data;
 };
 
 export const deleteProcedure = async (id) => {
-    try {
-        const res = await api.delete(`/procedures/${id}`);
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.delete(`/procedures/${id}`, { headers: authHeader() });
+    return res.data;
 };
 
 export const findProceduresByCategory = async (category) => {
-    try {
-        const res = await api.get("/procedures/search/category", {
-            params: { category }
-        });
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/procedures/search/category", { params: { category }, headers: authHeader() });
+    return res.data;
 };
 
 export const findProceduresByActive = async (active) => {
-    try {
-        const res = await api.get("/procedures/search/byActive", {
-            params: { active }
-        });
-        return res.data;
-    } catch (e) {
-        throw e;
-    }
+    const res = await api.get("/procedures/search/byActive", { params: { active }, headers: authHeader() });
+    return res.data;
 };
 
-// Categories API
+// --- CATEGORIES API ---
 export const getCategories = async () => {
-    try {
-        const res = await api.get("/categories");
-        return res.data
-    } catch (e) {
-        // Заглушка на случай ошибки
-        return [
-            { id: 1, categoryName: "Стрижка" },
-        ];
-    }
+    const res = await api.get("/categories", { headers: authHeader() });
+    return res.data;
 };
+
+// --- SCHEDULE API ---
+export const getSchedules = async () => {
+    const res = await api.get("/schedule", { headers: authHeader() });
+    return res.data;
+};
+
+export const getScheduleById = async (id) => {
+    const res = await api.get(`/schedule/${id}`, { headers: authHeader() });
+    return res.data;
+};
+
+export const createSchedule = async (payload) => {
+    const res = await api.post("/schedule", payload, { headers: authHeader() });
+    return res.data;
+};
+
+export const updateSchedule = async (id, payload) => {
+    const res = await api.put(`/schedule/${id}`, payload, { headers: authHeader() });
+    return res.data;
+};
+
+export const deleteSchedule = async (id) => {
+    const res = await api.delete(`/schedule/${id}`, { headers: authHeader() });
+    return res.data;
+};
+
+export const setScheduleActive = async (id) => {
+    const res = await api.patch(`/schedule/${id}`, {}, { headers: authHeader() });
+    return res.data;
+};
+
+export const getSchedulesByBarber = async (barberId) => {
+    const res = await api.get(`/schedule/barber/${barberId}`, { headers: authHeader() });
+    return res.data;
+};
+
+export const getActiveScheduleByBarber = async (barberId) => {
+    const res = await api.get(`/schedule/barber/${barberId}/active`, { headers: authHeader() });
+    return res.data;
+};
+
+export const isBarberWorking = async (barberId, dayOfWeek) => {
+    const res = await api.get(`/schedule/${barberId}/is-working`, { params: { dayOfWeek }, headers: authHeader() });
+    return res.data;
+};
+
+export const getScheduleForDay = async (barberId, dayOfWeek) => {
+    const res = await api.get(`/schedule/${barberId}/day`, { params: { dayOfWeek }, headers: authHeader() });
+    return res.data;
+};
+
 export default api;

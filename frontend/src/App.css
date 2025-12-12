@@ -127,4 +127,20 @@
     box-shadow: 0 2px 12px rgba(245, 158, 11, 0.15);
   }
 
+  /* В навигацию добавьте ссылку на расписание */
+  .nav-link[href*="/schedules"] {
+    color: #0ea5e9;
+  }
+
+  .nav-link[href*="/schedules"]:hover {
+    color: #0284c7;
+    background: rgba(14, 165, 233, 0.05);
+  }
+
+  .nav-link[href*="/schedules"].active {
+    color: #0284c7;
+    background: rgba(14, 165, 233, 0.1);
+    box-shadow: 0 2px 12px rgba(14, 165, 233, 0.15);
+  }
+
 }

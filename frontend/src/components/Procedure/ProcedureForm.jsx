@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./ProcedureForm.css";
 
 export default function ProcedureForm({
@@ -7,30 +7,28 @@ export default function ProcedureForm({
                                           submitLabel = "Сохранить",
                                           categories = []
                                       }) {
-    const loaded = useRef(false);
-    const [form, setForm] = useState({
+    // Инициализируем форму с данными из initial
+    const [form, setForm] = useState(() => ({
         procedureName: initial.procedureName || "",
         description: initial.description || "",
         price: initial.price || "",
         duration: initial.duration || "",
         categoryId: initial.categoryId || "",
         active: initial.active !== undefined ? initial.active : true
-    });
+    }));
 
     const [errors, setErrors] = useState({});
 
+    // Обновляем форму при изменении initial
     useEffect(() => {
-        if (!loaded.current) {
-            setForm({
-                procedureName: initial.procedureName || "",
-                description: initial.description || "",
-                price: initial.price || "",
-                duration: initial.duration || "",
-                categoryId: initial.categoryId || "",
-                active: initial.active !== undefined ? initial.active : true
-            });
-            loaded.current = true;
-        }
+        setForm({
+            procedureName: initial.procedureName || "",
+            description: initial.description || "",
+            price: initial.price || "",
+            duration: initial.duration || "",
+            categoryId: initial.categoryId || "",
+            active: initial.active !== undefined ? initial.active : true
+        });
     }, [initial]);
 
     const handleChange = (e) => {
@@ -50,8 +48,6 @@ export default function ProcedureForm({
 
         if (!form.procedureName.trim()) newErrors.procedureName = "Название обязательно";
         else if (form.procedureName.length < 2) newErrors.procedureName = "Минимум 2 символа";
-
-        if (!form.description.trim()) newErrors.description = "Описание обязательно";
 
         if (!form.price || isNaN(form.price) || parseFloat(form.price) <= 0) {
             newErrors.price = "Введите корректную цену";
@@ -93,13 +89,13 @@ export default function ProcedureForm({
 
         if (!category) return "Не найдена";
 
-        // Обрабатываем случай, когда category - объект
         if (typeof category === 'object') {
             return category.categoryName || category.name || category.category || "Без названия";
         }
 
         return category;
     };
+
     return (
         <div className="form-container">
             <form onSubmit={handleSubmit} className="procedure-form">

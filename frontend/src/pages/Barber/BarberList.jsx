@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getBarbers, deleteBarber } from "../../services/api.js";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
+import {getBarbers, deleteBarber} from "../../services/api.js";
 import "./BarberList.css";
 
 export default function BarberList() {
@@ -37,11 +37,11 @@ export default function BarberList() {
 
     const getStatusBadge = (status) => {
         const statusConfig = {
-            ACTIVE: { label: "Активный", class: "status-active" },
-            INACTIVE: { label: "Неактивный", class: "status-inactive" },
-            ON_VACATION: { label: "В отпуске", class: "status-vacation" }
+            ACTIVE: {label: "Активный", class: "status-active"},
+            INACTIVE: {label: "Неактивный", class: "status-inactive"},
+            ON_VACATION: {label: "В отпуске", class: "status-vacation"}
         };
-        const config = statusConfig[status] || { label: status, class: "status-default" };
+        const config = statusConfig[status] || {label: status, class: "status-default"};
         return <span className={`status-badge ${config.class}`}>{config.label}</span>;
     };
 
@@ -107,6 +107,14 @@ export default function BarberList() {
                                 <td>{getStatusBadge(barber.status)}</td>
                                 <td>
                                     <div className="action-buttons">
+                                        <Link
+                                            to={`/barbers/${barber.id}/schedule`}
+                                            className="schedule-btn"
+                                            title="Просмотреть расписание"
+                                        >
+                                            📅 Расписание
+                                        </Link>
+
                                         <Link
                                             to={`/barbers/${barber.id}/edit`}
                                             className="edit-btn"

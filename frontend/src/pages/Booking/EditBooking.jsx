@@ -28,14 +28,10 @@ export default function EditBooking() {
             ]);
 
             // Преобразуем данные для формы
-            const client = clientsData.find(c =>
-                `${c.firstName} ${c.lastName}` === bookingData.clientName
-            );
-            const barber = barbersData.find(b =>
-                `${b.firstName} ${b.lastName}` === bookingData.barberName
-            );
+            const client = clientsData.find(c => c.id === bookingData.clientId);
+            const barber = barbersData.find(b => b.id === bookingData.barberId);
             const procedure = proceduresData.find(p =>
-                p.name === bookingData.procedureName
+                p.procedureName === bookingData.procedureName
             );
 
             setInitial({

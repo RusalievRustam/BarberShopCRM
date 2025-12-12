@@ -268,6 +268,26 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.schedule-btn {
+    padding: 0.75rem 1.25rem;
+    background: rgba(14, 165, 233, 0.1);
+    color: #0ea5e9;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid rgba(14, 165, 233, 0.2);
+}
+
+.schedule-btn:hover {
+    background: rgba(14, 165, 233, 0.15);
+    transform: translateY(-1px);
 }
