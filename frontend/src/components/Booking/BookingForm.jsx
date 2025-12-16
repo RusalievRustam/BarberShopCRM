@@ -15,7 +15,7 @@ export default function BookingForm({
         clientId: initial.clientId || "",
         barberId: initial.barberId || "",
         procedureId: initial.procedureId || "",
-        startTime: initial.startTime ? new Date(initial.startTime).toISOString().slice(0, 16) : "",
+        startTime: initial.startTime ? String(initial.startTime).slice(0, 16) : "",
         status: initial.status || "ACTIVE"
     });
 
@@ -28,7 +28,7 @@ export default function BookingForm({
                 clientId: initial.clientId || "",
                 barberId: initial.barberId || "",
                 procedureId: initial.procedureId || "",
-                startTime: initial.startTime ? new Date(initial.startTime).toISOString().slice(0, 16) : "",
+                startTime: initial.startTime ? String(initial.startTime).slice(0, 16) : "",
                 status: initial.status || "ACTIVE"
             });
             loaded.current = true;
@@ -114,7 +114,7 @@ export default function BookingForm({
 
     const getProcedureName = (procedureId) => {
         const procedure = procedures.find(p => p.id === parseInt(procedureId));
-        return procedure ? procedure.name : "";
+        return procedure ? procedure.procedureName : "";
     };
 
     const getProcedureDuration = (procedureId) => {
@@ -229,7 +229,6 @@ export default function BookingForm({
                                 onChange={handleChange}
                             >
                                 <option value="ACTIVE">Активно</option>
-                                <option value="IN_PROGRESS">В процессе</option>
                                 <option value="COMPLETED">Завершено</option>
                                 <option value="CANCELLED">Отменено</option>
                                 <option value="RESCHEDULED">Перенесено</option>

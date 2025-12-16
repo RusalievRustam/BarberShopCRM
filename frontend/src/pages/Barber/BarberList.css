@@ -291,3 +291,77 @@
     background: rgba(14, 165, 233, 0.15);
     transform: translateY(-1px);
 }
+
+/* Карточки барберов */
+.barber-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.barber-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 16px;
+}
+
+.barber-card-top {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.barber-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: white;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.barber-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.barber-phone {
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.barber-status-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.barber-card-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.book-btn {
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.25);
+}
+
+.book-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(16, 185, 129, 0.3);
+}

@@ -1,0 +1,86 @@
+.work-schedule-toolbar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.work-schedule-search {
+    width: 100%;
+    max-width: 520px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    outline: none;
+    font-size: 16px;
+}
+
+.work-schedule-search:focus {
+    border-color: rgba(59, 130, 246, 0.9);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.work-schedule-empty {
+    text-align: center;
+    color: #64748b;
+    padding: 32px 0;
+}
+
+.work-schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+}
+
+.work-schedule-card {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid rgba(226, 232, 240, 0.9);
+    background: #ffffff;
+    cursor: pointer;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.work-schedule-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.work-schedule-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: #0f172a;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.22), rgba(245, 158, 11, 0.22));
+}
+
+.work-schedule-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.work-schedule-name {
+    font-weight: 900;
+    color: #0f172a;
+}
+
+.work-schedule-sub {
+    color: #475569;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.work-schedule-cta {
+    font-weight: 900;
+    color: #2563eb;
+}

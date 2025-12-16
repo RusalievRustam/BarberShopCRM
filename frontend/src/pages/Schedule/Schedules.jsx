@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getSchedules, deleteSchedule, getBarbers } from "../../services/api";
+import { getSchedules, deleteSchedule, getBarbers, setScheduleActive } from "../../services/api";
 import "./Schedules.css";
 
 const DAYS_RU = {

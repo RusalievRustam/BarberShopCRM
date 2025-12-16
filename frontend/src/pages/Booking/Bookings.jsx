@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getBookings, cancelBooking, deleteBooking, searchByBarber, searchByClient } from "../../services/api";
+import {
+    adminCreatePayment,
+    adminGetPayments,
+    getBookings,
+    cancelBooking,
+    deleteBooking,
+    isAdmin,
+    searchByBarber,
+    searchByClient
+} from "../../services/api";
 import "./Booking.css";
 
 export default function Bookings() {
@@ -10,6 +19,17 @@ export default function Bookings() {
     const [searchType, setSearchType] = useState("barber");
     const [searchKeyword, setSearchKeyword] = useState("");
     const [filterStatus, setFilterStatus] = useState("ALL");
+    const [paidByBookingId, setPaidByBookingId] = useState({});
+
+    const admin = isAdmin();
+
+    const toLocalYyyyMmDd = (date) => {
+        const d = new Date(date);
+        const yyyy = String(d.getFullYear());
+        const mm = String(d.getMonth() + 1).padStart(2, "0");
+        const dd = String(d.getDate()).padStart(2, "0");
+        return `${yyyy}-${mm}-${dd}`;
+    };
 
     const loadBookings = async () => {
         setLoading(true);
@@ -17,6 +37,25 @@ export default function Bookings() {
         try {
             const data = await getBookings();
             setBookings(data);
+
+            if (admin && Array.isArray(data) && data.length > 0) {
+                const dates = data
+                    .map((b) => b.startTime)
+                    .filter(Boolean)
+                    .map((t) => new Date(t));
+
+                if (dates.length > 0) {
+                    const minDate = new Date(Math.min(...dates.map((d) => d.getTime())));
+                    const maxDate = new Date(Math.max(...dates.map((d) => d.getTime())));
+
+                    const payments = await adminGetPayments(toLocalYyyyMmDd(minDate), toLocalYyyyMmDd(maxDate));
+                    const map = {};
+                    (payments || []).forEach((p) => {
+                        if (p && p.bookingId) map[p.bookingId] = p;
+                    });
+                    setPaidByBookingId(map);
+                }
+            }
         } catch (e) {
             setError(e.message || "Ошибка загрузки записей");
         } finally {
@@ -45,6 +84,36 @@ export default function Bookings() {
             setBookings(bookings.filter(b => b.id !== id));
         } catch (e) {
             alert("Ошибка при удалении: " + (e.message || e.status));
+        }
+    };
+
+    const handlePay = async (booking) => {
+        if (!admin) return;
+        if (!booking?.id) return;
+
+        if (paidByBookingId[booking.id]) {
+            alert("Эта запись уже оплачена");
+            return;
+        }
+
+        const method = (prompt("Метод оплаты: CASH или CARD", "CASH") || "").trim().toUpperCase();
+        if (method !== "CASH" && method !== "CARD") {
+            alert("Некорректный метод оплаты");
+            return;
+        }
+
+        const amount = booking.finalAmount ?? "";
+        if (!confirm(`Принять оплату ${amount ? `на сумму ${amount} сом ` : ""}методом ${method}?`)) return;
+
+        try {
+            setLoading(true);
+            const payment = await adminCreatePayment(booking.id, method);
+            setPaidByBookingId((prev) => ({ ...prev, [booking.id]: payment }));
+            alert("Оплата принята");
+        } catch (e) {
+            alert("Ошибка при оплате: " + (e?.response?.data?.message || e.message || e.status));
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -90,7 +159,6 @@ export default function Bookings() {
     const getStatusBadge = (status) => {
         const statusConfig = {
             'ACTIVE': { label: 'Запланировано', class: 'status-active' },
-            'IN_PROGRESS': { label: 'В процессе', class: 'status-in-progress' },
             'COMPLETED': { label: 'Завершено', class: 'status-completed' },
             'CANCELLED': { label: 'Отменено', class: 'status-cancelled' },
             'RESCHEDULED': { label: 'Перенесено', class: 'status-rescheduled' }
@@ -152,13 +220,6 @@ export default function Bookings() {
                     </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-icon">✂️</div>
-                    <div className="stat-content">
-                        <span className="stat-number">{stats.confirmed}</span>
-                        <span className="stat-label">Подтверждено</span>
-                    </div>
-                </div>
-                <div className="stat-card">
                     <div className="stat-icon">🏁</div>
                     <div className="stat-content">
                         <span className="stat-number">{stats.completed}</span>
@@ -205,7 +266,6 @@ export default function Bookings() {
                     >
                         <option value="ALL">Все статусы</option>
                         <option value="ACTIVE">Активно</option>
-                        <option value="IN_PROGRESS">В процессе</option>
                         <option value="COMPLETED">Завершено</option>
                         <option value="CANCELLED">Отменено</option>
                         <option value="RESCHEDULED">Перенесено</option>
@@ -237,6 +297,7 @@ export default function Bookings() {
                             <th>Клиент</th>
                             <th>Барбер</th>
                             <th>Услуга</th>
+                            <th>Сумма</th>
                             <th>Время</th>
                             <th>Статус</th>
                             <th>Действия</th>
@@ -244,6 +305,9 @@ export default function Bookings() {
                         </thead>
                         <tbody>
                         {filteredBookings.map(booking => (
+                            (() => {
+                                const isPaid = Boolean(paidByBookingId[booking.id]);
+                                return (
                             <tr key={booking.id} className={`booking-row status-${booking.status.toLowerCase()}`}>
                                 <td>
                                     <div className="booking-client">
@@ -255,6 +319,12 @@ export default function Bookings() {
                                 </td>
                                 <td>
                                     <div className="booking-procedure">{booking.procedureName}</div>
+                                </td>
+                                <td>
+                                    <div className="booking-amount">
+                                        {booking.finalAmount ?? "—"}
+                                        {isPaid && <span className="payment-badge">Оплачено</span>}
+                                    </div>
                                 </td>
                                 <td>
                                     <div className="booking-time">
@@ -275,6 +345,16 @@ export default function Bookings() {
                                         >
                                             Ред.
                                         </Link>
+                                        {admin && booking.status !== 'CANCELLED' && (
+                                            <button
+                                                onClick={() => handlePay(booking)}
+                                                className="pay-btn"
+                                                disabled={isPaid}
+                                                title={isPaid ? "Оплачено" : "Принять оплату"}
+                                            >
+                                                {isPaid ? "Оплачено" : "Оплатить"}
+                                            </button>
+                                        )}
                                         {booking.status !== 'CANCELLED' && booking.status !== 'COMPLETED' && (
                                             <button
                                                 onClick={() => handleCancel(booking.id)}
@@ -292,6 +372,8 @@ export default function Bookings() {
                                     </div>
                                 </td>
                             </tr>
+                                );
+                            })()
                         ))}
                         </tbody>
                     </table>
@@ -303,10 +385,6 @@ export default function Bookings() {
                             <span className="legend-item">
                                 <span className="legend-color active"></span>
                                 Запланировано
-                            </span>
-                            <span className="legend-item">
-                                <span className="legend-color confirmed"></span>
-                                Подтверждено
                             </span>
                             <span className="legend-item">
                                 <span className="legend-color completed"></span>

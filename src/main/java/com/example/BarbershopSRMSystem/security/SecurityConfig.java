@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -42,14 +43,17 @@ public class SecurityConfig {
                                 "/auth/client/enter"
                         ).permitAll()
 
-                        // --- Открытые для клиентов публичные API ---
+                        .requestMatchers(HttpMethod.GET, "/api/roles").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/bookings/**").hasRole("ADMIN")
+
+                        // --- Обычные защищенные API ---
                         .requestMatchers(
                                 "/api/booking/**",
                                 "/api/procedures/**",
                                 "/api/categories/**",
-                                "/api/barber/**",
+                                "/api/barbers/**",
                                 "/api/clients/**"
-                        ).permitAll()
+                        ).authenticated()
 
                         // --- Только для администратора ---
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")

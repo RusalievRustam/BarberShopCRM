@@ -65,7 +65,7 @@ export default function BarberList() {
         <div className="barber-list">
             <div className="page-header">
                 <h1>Наши барберы</h1>
-                <p>Управление списком барберов</p>
+                <p>Выберите барбера и запишитесь на удобное время</p>
             </div>
 
             <div className="actions-bar">
@@ -85,54 +85,44 @@ export default function BarberList() {
                     </Link>
                 </div>
             ) : (
-                <div className="table-container">
-                    <table className="barbers-table">
-                        <thead>
-                        <tr>
-                            <th>Имя и фамилия</th>
-                            <th>Телефон</th>
-                            <th>Статус</th>
-                            <th>Действия</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {barbers.map(barber => (
-                            <tr key={barber.id}>
-                                <td>
+                <div className="barber-cards">
+                    {barbers.map((barber) => (
+                        <div key={barber.id} className="barber-card">
+                            <div className="barber-card-top">
+                                <div className="barber-avatar">
+                                    {barber.firstName?.charAt(0)}{barber.lastName?.charAt(0)}
+                                </div>
+                                <div className="barber-meta">
                                     <div className="barber-name">
                                         {barber.firstName} {barber.lastName}
                                     </div>
-                                </td>
-                                <td>{barber.phone}</td>
-                                <td>{getStatusBadge(barber.status)}</td>
-                                <td>
-                                    <div className="action-buttons">
-                                        <Link
-                                            to={`/barbers/${barber.id}/schedule`}
-                                            className="schedule-btn"
-                                            title="Просмотреть расписание"
-                                        >
-                                            📅 Расписание
-                                        </Link>
+                                    <div className="barber-phone">📱 {barber.phone}</div>
+                                    <div className="barber-status-row">{getStatusBadge(barber.status)}</div>
+                                </div>
+                            </div>
 
-                                        <Link
-                                            to={`/barbers/${barber.id}/edit`}
-                                            className="edit-btn"
-                                        >
-                                            Редактировать
-                                        </Link>
-                                        <button
-                                            onClick={() => handleDelete(barber.id, `${barber.firstName} ${barber.lastName}`)}
-                                            className="delete-btn"
-                                        >
-                                            Удалить
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
+                            <div className="barber-card-actions">
+                                <Link
+                                    to={`/barbers/${barber.id}/schedule`}
+                                    className="book-btn"
+                                    title="Выбрать время и записаться"
+                                >
+                                    Записаться
+                                </Link>
+
+                                <Link to={`/barbers/${barber.id}/edit`} className="edit-btn">
+                                    Редактировать
+                                </Link>
+
+                                <button
+                                    onClick={() => handleDelete(barber.id, `${barber.firstName} ${barber.lastName}`)}
+                                    className="delete-btn"
+                                >
+                                    Удалить
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

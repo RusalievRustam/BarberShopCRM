@@ -20,22 +20,29 @@ import EditBooking from "./pages/Booking/EditBooking";
 import Procedures from "./pages/Procedure/Procedures";
 import CreateProcedure from "./pages/Procedure/CreateProcedure";
 import EditProcedure from "./pages/Procedure/EditProcedure";
-import ProcedureDetails from "./pages/Procedure/ProcedureDetails";
-
-import Schedules from "./pages/Schedule/Schedules";
-import CreateSchedule from "./pages/Schedule/CreateSchedule";
-import EditSchedule from "./pages/Schedule/EditSchedule";
-import BarberSchedule from "./pages/Barber/BarberSchedule";
+import ProcedureDetails from "./pages/Procedure/ProcedureDetails.jsx";
 
 import Login from "./pages/Authorization/Login";
 import Register from "./pages/Authorization/Register";
+import PrivateRoute from "./router/PrivateRote.jsx";
+import AdminRoute from "./router/AdminRoute.jsx";
+import { isAdmin } from "./services/api";
 
-import PrivateRoute from "../src/router/PrivateRote.jsx";
+import Finance from "./pages/Finance/Finance.jsx";
+
+import BarberBooking from "./pages/Barber/BarberBooking.jsx";
+import BarberSchedule from "./pages/Barber/BarberSchedule.jsx";
+
+import Schedules from "./pages/Schedule/Schedules.jsx";
+import CreateSchedule from "./pages/Schedule/CreateSchedule.jsx";
+import EditSchedule from "./pages/Schedule/EditSchedule.jsx";
+import WorkScheduleHome from "./pages/Schedule/WorkScheduleHome.jsx";
 
 import "./App.css";
 
 export default function App() {
     const token = localStorage.getItem("token");
+    const admin = isAdmin();
 
     return (
         <div className="app">
@@ -52,6 +59,9 @@ export default function App() {
                             <NavLink to="/clients" className="nav-link">Клиенты</NavLink>
                             <NavLink to="/procedures" className="nav-link">Услуги</NavLink>
                             <NavLink to="/bookings" className="nav-link">Записи</NavLink>
+                            {admin && <NavLink to="/work-schedule" className="nav-link">График мастеров</NavLink>}
+                            {/* Финансы показываем только админу */}
+                            {admin && <NavLink to="/admin/finance" className="nav-link">Финансы</NavLink>}
                             <NavLink to="/admin/users" className="nav-link">Пользователи</NavLink>
                         </nav>
                     </div>
@@ -65,97 +75,43 @@ export default function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
 
-                    {/* Если не авторизован → на логин */}
-                    <Route path="/" element={<Navigate to="/bookings" replace />} />
+                    <Route path="/" element={<Navigate to={token ? "/bookings" : "/login"} replace />} />
 
-                    {/* --- Защищённые маршруты --- */}
-                    <Route
-                        path="/barbers"
-                        element={<PrivateRoute><BarberList /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/barbers/create"
-                        element={<PrivateRoute><CreateBarber /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/barbers/:id/edit"
-                        element={<PrivateRoute><EditBarber /></PrivateRoute>}
-                    />
+                    {/* --- Защищенные маршруты --- */}
+                    <Route path="/barbers" element={<PrivateRoute><BarberList /></PrivateRoute>} />
+                    <Route path="/barbers/create" element={<PrivateRoute><CreateBarber /></PrivateRoute>} />
+                    <Route path="/barbers/:id/edit" element={<PrivateRoute><EditBarber /></PrivateRoute>} />
 
-                    <Route
-                        path="/clients"
-                        element={<PrivateRoute><Clients /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/clients/create"
-                        element={<PrivateRoute><CreateClient /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/clients/:id/edit"
-                        element={<PrivateRoute><EditClient /></PrivateRoute>}
-                    />
+                    {/* Запись к барберу (просмотр доступных/занятых слотов + бронирование) */}
+                    <Route path="/barbers/:id/schedule" element={<PrivateRoute><BarberBooking /></PrivateRoute>} />
 
-                    <Route
-                        path="/procedures"
-                        element={<PrivateRoute><Procedures /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/procedures/create"
-                        element={<PrivateRoute><CreateProcedure /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/procedures/:id/edit"
-                        element={<PrivateRoute><EditProcedure /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/procedures/:id"
-                        element={<PrivateRoute><ProcedureDetails /></PrivateRoute>}
-                    />
+                    {/* Рабочий график барбера (управление расписанием) */}
+                    <Route path="/barbers/:id/work-schedule" element={<AdminRoute><BarberSchedule /></AdminRoute>} />
 
-                    <Route
-                        path="/bookings"
-                        element={<PrivateRoute><Bookings /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/bookings/create"
-                        element={<PrivateRoute><CreateBooking /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/bookings/:id/edit"
-                        element={<PrivateRoute><EditBooking /></PrivateRoute>}
-                    />
+                    <Route path="/clients" element={<PrivateRoute><Clients /></PrivateRoute>} />
+                    <Route path="/clients/create" element={<PrivateRoute><CreateClient /></PrivateRoute>} />
+                    <Route path="/clients/:id/edit" element={<PrivateRoute><EditClient /></PrivateRoute>} />
 
-                    <Route
-                        path="/admin/users"
-                        element={<PrivateRoute><Users /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/admin/users/create"
-                        element={<PrivateRoute><CreateUser /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/admin/users/:id/edit"
-                        element={<PrivateRoute><EditUser /></PrivateRoute>}
-                    />
+                    <Route path="/procedures" element={<PrivateRoute><Procedures /></PrivateRoute>} />
+                    <Route path="/procedures/create" element={<PrivateRoute><CreateProcedure /></PrivateRoute>} />
+                    <Route path="/procedures/:id/edit" element={<PrivateRoute><EditProcedure /></PrivateRoute>} />
+                    <Route path="/procedures/:id" element={<PrivateRoute><ProcedureDetails /></PrivateRoute>} />
 
-                    <Route
-                        path="/schedules"
-                        element={<PrivateRoute><Schedules /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/schedules/create"
-                        element={<PrivateRoute><CreateSchedule /></PrivateRoute>}
-                    />
-                    <Route
-                        path="/schedules/:id/edit"
-                        element={<PrivateRoute><EditSchedule /></PrivateRoute>}
-                    />
+                    <Route path="/bookings" element={<PrivateRoute><Bookings /></PrivateRoute>} />
+                    <Route path="/bookings/create" element={<PrivateRoute><CreateBooking /></PrivateRoute>} />
+                    <Route path="/bookings/:id/edit" element={<PrivateRoute><EditBooking /></PrivateRoute>} />
 
-                    <Route
-                        path="/barbers/:id/schedule"
-                        element={<PrivateRoute><BarberSchedule /></PrivateRoute>}
-                    />
+                    <Route path="/admin/users" element={<PrivateRoute><Users /></PrivateRoute>} />
+                    <Route path="/admin/users/create" element={<PrivateRoute><CreateUser /></PrivateRoute>} />
+                    <Route path="/admin/users/:id/edit" element={<PrivateRoute><EditUser /></PrivateRoute>} />
 
+                    <Route path="/admin/finance" element={<AdminRoute><Finance /></AdminRoute>} />
+
+                    <Route path="/work-schedule" element={<AdminRoute><WorkScheduleHome /></AdminRoute>} />
+
+                    <Route path="/schedules" element={<AdminRoute><Schedules /></AdminRoute>} />
+                    <Route path="/schedules/create" element={<AdminRoute><CreateSchedule /></AdminRoute>} />
+                    <Route path="/schedules/:id/edit" element={<AdminRoute><EditSchedule /></AdminRoute>} />
                 </Routes>
             </main>
         </div>

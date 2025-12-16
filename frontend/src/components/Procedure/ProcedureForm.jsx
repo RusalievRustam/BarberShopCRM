@@ -19,17 +19,8 @@ export default function ProcedureForm({
 
     const [errors, setErrors] = useState({});
 
-    // Обновляем форму при изменении initial
-    useEffect(() => {
-        setForm({
-            procedureName: initial.procedureName || "",
-            description: initial.description || "",
-            price: initial.price || "",
-            duration: initial.duration || "",
-            categoryId: initial.categoryId || "",
-            active: initial.active !== undefined ? initial.active : true
-        });
-    }, [initial]);
+    // Инициализация состояния формы происходит только один раз при монтировании компонента
+    // через функцию-инициализатор в useState
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;

@@ -39,11 +39,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     );
     
     @Query("SELECT b FROM Booking b WHERE b.barber = :barber AND " +
-           "b.status = 'CONFIRMED' AND " +
-           "((b.startTime >= :start AND b.startTime < :end) OR " +
-           "(b.endTime > :start AND b.endTime <= :end) OR " +
-           "(b.startTime <= :start AND b.endTime >= :end))")
-    List<Booking> findConflictingBookings(
+            "b.status <> 'CANCELLED' AND " +
+            "b.startTime < :end AND b.endTime > :start")
+    List<Booking> findOverlappingActiveBookings(
             @Param("barber") Barber barber,
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end

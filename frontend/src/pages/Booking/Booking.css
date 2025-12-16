@@ -267,16 +267,11 @@
     border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.status-confirmed {
-    background: rgba(16, 185, 129, 0.1);
-    color: #047857;
-    border: 1px solid rgba(16, 185, 129, 0.2);
-}
-
-.status-in-progress {
-    background: rgba(245, 158, 11, 0.1);
-    color: #b45309;
-    border: 1px solid rgba(245, 158, 11, 0.2);
+/* Алиасы под классы из JSX */
+.status-active {
+    background: rgba(59, 130, 246, 0.1);
+    color: #2563eb;
+    border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
 .status-completed {
@@ -302,6 +297,49 @@
     display: flex;
     gap: 0.5rem;
     flex-wrap: wrap;
+}
+
+.pay-btn {
+    padding: 0.5rem 1rem;
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.pay-btn:hover {
+    background: rgba(16, 185, 129, 0.18);
+    transform: translateY(-1px);
+}
+
+.pay-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.booking-amount {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.payment-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
 }
 
 .bookings-container .edit-btn {
@@ -399,8 +437,8 @@
     background: #2563eb;
 }
 
-.legend-color.confirmed {
-    background: #047857;
+.legend-color.active {
+    background: #2563eb;
 }
 
 .legend-color.completed {
